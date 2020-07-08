@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
+import SingleDice from "./SingleDice";
 import "./style.css";
 
-function Dice() {
+const divStyle = {
+  margin: "40px",
+  border: "5px solid pink",
+};
+
+function Dice({ randomNumber, showDice }) {
   return (
     <div>
       <div className="new-game">
@@ -9,20 +15,21 @@ function Dice() {
         New Game
       </div>
 
-      <div className="roll-dice">
+      <div
+        className="roll-dice"
+        onClick={(e) => {
+          console.log("okfvdffd");
+          randomNumber();
+        }}
+      >
         <i className="fa fa-circle"></i> ROLL DICE
       </div>
       <div className="hold">
         <i className="fa fa-pause"></i>
         HOLD
       </div>
-      <div className="all-dice">
-        <div className="dice1"></div>
-        <div className="dice2"></div>
-        <div className="dice3"></div>
-        <div className="dice4"></div>
-        <div className="dice5"></div>
-        <div className="dice6"></div>
+      <div>
+        <SingleDice showDice={showDice} />
       </div>
     </div>
   );
