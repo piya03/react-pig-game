@@ -4,25 +4,39 @@ import InputBox from "./InputBox";
 import Dice from "./Dice";
 import Rules from "./Rules";
 function ReactPigGame() {
-  let finalScore = [0, 0];
-  let roundScore;
-  let currentPlayer;
-  const [showDice, setShowDice] = useState(null);
+  //   let finalScore = [0, 0];
+  //   let currentPlayer;
 
+  const [showDice, setShowDice] = useState(null);
+  const [roundScore, setRoundScore] = useState(0);
+
+  console.log(showDice, "showDice ");
+  console.log(roundScore, "roundScoreroundScore");
   function randomNumber() {
     let saveRandomNo = Math.floor(Math.random() * 6) + 1;
-    setShowDice(saveRandomNo);
-    console.log(saveRandomNo, "saveRandomNosaveRandomNo");
+    setShowDice((prev) => {
+      return saveRandomNo;
+    });
+    setRoundScore(saveRandomNo + roundScore);
   }
+
   return (
     <>
       <Rules />
       <InputBox />
       <div className="container">
-        <CommonPlayer playerName="Player 1" finalScore="100" currentScore="20">
+        <CommonPlayer
+          playerName="Player 1"
+          finalScore="100"
+          roundScore={roundScore}
+        >
           <Dice randomNumber={randomNumber} showDice={showDice} />
         </CommonPlayer>
-        <CommonPlayer playerName="Player 2" finalScore="80" currentScore="10" />
+        <CommonPlayer
+          playerName="Player 2"
+          finalScore="80"
+          roundScore={roundScore}
+        />
       </div>
     </>
   );

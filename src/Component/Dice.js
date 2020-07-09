@@ -18,7 +18,6 @@ function Dice({ randomNumber, showDice }) {
       <div
         className="roll-dice"
         onClick={(e) => {
-          console.log("okfvdffd");
           randomNumber();
         }}
       >
