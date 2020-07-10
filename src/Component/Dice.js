@@ -7,7 +7,7 @@ const divStyle = {
   border: "5px solid pink",
 };
 
-function Dice({ randomNumber, showDice }) {
+function Dice({ rollDiceFun, showDice, holdFun }) {
   return (
     <div>
       <div className="new-game">
@@ -18,12 +18,17 @@ function Dice({ randomNumber, showDice }) {
       <div
         className="roll-dice"
         onClick={(e) => {
-          randomNumber();
+          rollDiceFun();
         }}
       >
         <i className="fa fa-circle"></i> ROLL DICE
       </div>
-      <div className="hold">
+      <div
+        className="hold"
+        onClick={(e) => {
+          holdFun();
+        }}
+      >
         <i className="fa fa-pause"></i>
         HOLD
       </div>

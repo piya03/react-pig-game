@@ -4,12 +4,12 @@ import "./style.css";
 function CommonPlayer({
   playerName,
   finalScore,
-  currentScore,
   children,
   roundScore,
+  passstyle,
 }) {
   return (
-    <div>
+    <div style={passstyle}>
       <div className="player">
         <div className="box">
           <div className="winner2">
