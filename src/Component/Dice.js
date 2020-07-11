@@ -7,10 +7,10 @@ const divStyle = {
   border: "5px solid pink",
 };
 
-function Dice({ rollDiceFun, showDice, holdFun }) {
+function Dice({ rollDiceFun, showDice, holdFun, resetGameFun }) {
   return (
     <div>
-      <div className="new-game">
+      <div className="new-game" onClick={() => resetGameFun()}>
         <i className="fa fa-plus-circle"></i>
         New Game
       </div>

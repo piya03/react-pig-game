@@ -5,8 +5,7 @@ import Dice from "./Dice";
 import Rules from "./Rules";
 
 function ReactPigGame() {
-  let active = 1;
-
+  const [active, setActive] = useState(1);
   const [showDice, setShowDice] = useState(null);
   const [roundScore, setRoundScore] = useState({
     player1: 0,
@@ -24,48 +23,46 @@ function ReactPigGame() {
   function rollDiceFun() {
     randomNo = Math.floor(Math.random() * 6) + 1;
     setShowDice(randomNo);
-    if (active === 1) {
-      setRoundScore({
-        ...roundScore,
-        player1: randomNo + roundScore.player1,
-      });
-    }
-    ///if active 2
-    if (active === 2) {
-      setRoundScore({
-        ...roundScore,
-        player2: randomNo + roundScore.player2,
-      });
-    }
 
     if (randomNo === 1) {
-      active = 2;
-
-      return setRoundScore({
+      setActive(active === 1 ? 2 : 1);
+      setRoundScore({
         ...roundScore,
-        player1: 0,
+        [`player${active}`]: 0,
       });
+      return;
     }
+
+    setRoundScore({
+      ...roundScore,
+      [`player${active}`]: randomNo + roundScore[`player${active}`],
+    });
   }
+
   const passstyle = {
     background: "green",
   };
   function holdFun() {
-    if (active === 1) {
-      SetFinalScore({
-        ...finalScore,
-        player1: (finalScore.player1 += roundScore.player1),
-      });
-    }
-    active = 2;
-    if (active === 2) {
-      SetFinalScore({
-        ...finalScore,
-        player2: (finalScore.player2 += roundScore.player2),
-      });
-    }
+    setActive(active === 1 ? 2 : 1);
+
+    SetFinalScore({
+      ...finalScore,
+      [`player${active}`]: (finalScore[`player${active}`] +=
+        roundScore[`player${active}`]),
+    });
   }
 
+  function resetGameFun() {
+    setActive(1);
+    SetFinalScore({
+      player1: 0,
+      player2: 0,
+    });
+    setRoundScore({
+      player1: 0,
+      player2: 0,
+    });
+  }
   return (
     <>
       <Rules />
@@ -81,6 +78,7 @@ function ReactPigGame() {
             rollDiceFun={rollDiceFun}
             showDice={showDice}
             holdFun={holdFun}
+            resetGameFun={resetGameFun}
           />
         </CommonPlayer>
         <CommonPlayer
