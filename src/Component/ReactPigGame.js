@@ -23,11 +23,23 @@ function ReactPigGame() {
   function rollDiceFun() {
     randomNo = Math.floor(Math.random() * 6) + 1;
     setShowDice(randomNo);
-
     if (randomNo === 1) {
       setActive(active === 1 ? 2 : 1);
       setRoundScore({
         ...roundScore,
+        [`player${active}`]: 0,
+      });
+      return;
+    }
+    ///if two time 6 roundscore and finalscore =0
+    if (randomNo === 6 && showDice === 6) {
+      setActive(active === 1 ? 2 : 1);
+      setRoundScore({
+        ...roundScore,
+        [`player${active}`]: 0,
+      });
+      SetFinalScore({
+        ...finalScore,
         [`player${active}`]: 0,
       });
       return;
@@ -39,8 +51,11 @@ function ReactPigGame() {
     });
   }
 
-  const passstyle = {
-    background: "green",
+  const passstyle1 = {
+    background: active === 1 ? "#e5cdcd" : "",
+  };
+  const passstyle2 = {
+    background: active === 2 ? "#e5cdcd" : "",
   };
   function holdFun() {
     setActive(active === 1 ? 2 : 1);
@@ -69,7 +84,7 @@ function ReactPigGame() {
       <InputBox />
       <div className="container">
         <CommonPlayer
-          passstyle={passstyle}
+          passstyle={passstyle1}
           playerName="Player 1"
           finalScore={finalScore.player1}
           roundScore={roundScore.player1}
@@ -83,6 +98,7 @@ function ReactPigGame() {
         </CommonPlayer>
         <CommonPlayer
           playerName="Player 2"
+          passstyle={passstyle2}
           roundScore={roundScore.player2}
           finalScore={finalScore.player2}
         />
