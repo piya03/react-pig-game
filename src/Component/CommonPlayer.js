@@ -7,13 +7,23 @@ function CommonPlayer({
   children,
   roundScore,
   passstyle,
+  win,
 }) {
   return (
     <div style={passstyle}>
       <div className="player">
         <div className="box">
           <div className="winner2">
-            <div className="playerName">{playerName}</div>
+            <div
+              className="playerName"
+              style={{
+                color: win ? "green" : "",
+                fontWeight: win ? "600" : "",
+                textShadow: win ? "1px 1px green" : "",
+              }}
+            >
+              {playerName} {win}
+            </div>
             <div className="redCircle"></div>
           </div>
           <div className="final_score">{finalScore}</div>

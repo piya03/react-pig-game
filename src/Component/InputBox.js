@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 
-function InputBox() {
+function InputBox({ onChangeInput, inputValue }) {
+  console.log(inputValue, "inputValue i m from input box");
+
   return (
     <div className="">
       <div className="no_Text">Enter Winning Score</div>
@@ -9,7 +11,8 @@ function InputBox() {
         type="number"
         id="inputType"
         placeholder="Enter Winning Score"
-        value="20"
+        value={inputValue}
+        onChange={(e) => onChangeInput(e)}
       ></input>
     </div>
   );

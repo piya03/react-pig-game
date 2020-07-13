@@ -7,7 +7,7 @@ import Rules from "./Rules";
 function ReactPigGame() {
   const [active, setActive] = useState(1);
   const [showDice, setShowDice] = useState(null);
-
+  const [inputValue, setInputValue] = useState(20);
   const [roundScore, setRoundScore] = useState({
     player1: 0,
     player2: 0,
@@ -16,35 +16,39 @@ function ReactPigGame() {
     player1: 0,
     player2: 0,
   });
+  function onChangeInput(e) {
+    setInputValue(e.target.value);
+  }
+  const [win, setWin] = useState({
+    player1Won: "",
+    player2Won: "",
+  });
 
-  const [win, setWin] = useState(null);
-  console.log(win, "winwin");
   function winnerFun() {
     let winner = null;
-    if (finalScore[`player1`] >= 10) {
+    if (finalScore[`player1`] >= inputValue) {
       setActive(1);
-      winner = "player1";
-      setWin("Winner");
+      setWin({
+        ...win,
+        player1Won: "WINNER",
+      });
     }
-    if (finalScore[`player2`] >= 10) {
+    if (finalScore[`player2`] >= inputValue) {
       setActive(2);
-      winner = "player2";
-      setWin("Winner");
+      setWin({
+        ...win,
+        player2Won: "WINNER",
+      });
     }
 
     return winner;
   }
-
-  console.log(active, "activeactive");
-  console.log(roundScore, "roundScoreroundScore");
-  console.log(finalScore, "finalScore outside");
   let randomNo;
 
   function rollDiceFun() {
     const winner = winnerFun();
     if (!winner) {
       randomNo = Math.floor(Math.random() * 6) + 1;
-      console.log(randomNo, "randomNorandomNorandomNo");
 
       setShowDice(randomNo);
       if (randomNo === 1) {
@@ -80,14 +84,16 @@ function ReactPigGame() {
   }
   const passstyle1 = {
     background: active === 1 ? "#e5cdcd" : "",
+    border: win.player1Won ? "10px dotted #e50e71" : "",
   };
   const passstyle2 = {
     background: active === 2 ? "#e5cdcd" : "",
+    border: win.player2Won ? "10px dotted #e50e71" : "",
   };
   function holdFun() {
     setShowDice(null);
-    if (finalScore[`player${active}`] >= 10) {
-      return console.log("hello");
+    if (finalScore[`player${active}`] >= inputValue) {
+      return;
     }
     setActive(active === 1 ? 2 : 1);
 
@@ -107,8 +113,6 @@ function ReactPigGame() {
     const winner = winnerFun();
 
     if (winner) {
-      alert(`${winner} is the winner`);
-      console.log(`${winner} is the winner`);
       setShowDice(null);
     }
   }, [finalScore]);
@@ -123,18 +127,23 @@ function ReactPigGame() {
       player1: 0,
       player2: 0,
     });
+    setWin({
+      player1Won: "",
+      player1Won: "",
+    });
   }
 
   return (
     <>
       <Rules />
-      <InputBox />
+      <InputBox inputValue={inputValue} onChangeInput={onChangeInput} />
       <div className="container">
         <CommonPlayer
           passstyle={passstyle1}
           playerName="Player 1"
           finalScore={finalScore.player1}
           roundScore={roundScore.player1}
+          win={win.player1Won}
         >
           <Dice
             rollDiceFun={rollDiceFun}
@@ -148,6 +157,7 @@ function ReactPigGame() {
           passstyle={passstyle2}
           roundScore={roundScore.player2}
           finalScore={finalScore.player2}
+          win={win.player2Won}
         />
       </div>
     </>
